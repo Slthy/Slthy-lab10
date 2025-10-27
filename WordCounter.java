@@ -48,21 +48,22 @@ public class WordCounter {
         int count = 0;
 
         boolean invalidStopword = true;
+        boolean overrideIf = false;
         Pattern regex = Pattern.compile("[A-Za-z0-9']+");
         Matcher regexMatcher = regex.matcher(buffer.toString());
 
         while (regexMatcher.find()) {
             String token = regexMatcher.group();
             count++;
-
             if (stopword != null && token.equalsIgnoreCase(stopword)) {
                 invalidStopword = false;
-                break;
+                if(count<5 || overrideIf){
+                    overrideIf = true;
+                } else break;
             }
         }
-
-        if (stopword != null && invalidStopword) throw new InvalidStopwordException("Couldn't find stopword: " + stopword);
         if (count < 5) throw new TooSmallText("Only found " + count + " words.");
+        if (stopword != null && invalidStopword) throw new InvalidStopwordException("Couldn't find stopword: " + stopword);
         return count;
     }
 
@@ -120,14 +121,16 @@ public class WordCounter {
         try {
             buffer = (option == 1) ? processFile(args[0]) : new StringBuffer().append(args[0]);
         } catch (EmptyFileException e) {
-            //System.out.println(e.toString());
+            System.out.println(e.toString());
             buffer = new StringBuffer("");
         }
 
         try {
             int result = processText(buffer, stopword);
             System.out.println("Found " + result + " words.");
-        } catch (InvalidStopwordException | TooSmallText e) {
+        } catch (InvalidStopwordException e) {
+            System.out.println(e.toString());
+        } catch (TooSmallText e) {
             System.out.println(e.toString());
         }
     }
