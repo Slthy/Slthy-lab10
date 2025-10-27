@@ -11,6 +11,9 @@ because .toString() will be called on the exception object there.
 
 */
 
+import java.io.IOException;
+
+
 public class EmptyFileException extends IOException{
     public EmptyFileException() {
         super();

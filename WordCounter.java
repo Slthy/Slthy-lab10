@@ -5,7 +5,8 @@ You will write this class which is responsible for:
 -   a method called processText that expects a StringBuffer as argument (the text), 
         and a String stopword, and counts the number of words in that text through that stopword. 
     If the stopword is not found the text, the method will raise an InvalidStopwordException. 
-    If the stopword is null, your method will count all words in the file. The methods returns the integer word count, 
+    If the stopword is null, your method will count all words in the file.
+    The methods returns the integer word count, 
         unless the count was less than five, it which case it raises a TooSmallText exception (regardless of whether or not it found the stopword).
     For example, if there are only three words in the text, your code will raise the exception.
 -   a method called processFile that expects a String path as an argument, and converts the contents of the file to a StringBuffer, which it returns. 
@@ -30,11 +31,62 @@ NoSuchElementException - if input is exhausted
 IllegalStateException - if this scanner is closed
 */
 
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.io.FileNotFoundException;
+import java.util.Scanner; // Import the Scanner class to read text files
+import java.util.NoSuchElementException;
+import java.util.InputMismatchException;
+
 import java.util.Scanner;
 
 public class WordCounter {
     public static int processText(StringBuffer buffer, String stopword) throws InvalidStopwordException, TooSmallText{
-        Scanner sc = new Scanner()
+        Scanner sc = new Scanner(buffer.toString());
+        int count = 0;
+
+        boolean invalidStopword = true;
+        while(sc.hasNext()){
+            String token = sc.next();
+            count ++;
+            if (stopword != null && token.equals(stopword)) {
+                invalidStopword = false;
+                break;
+            }
+        }
+        sc.close();
+        //check other 
+
+        if (stopword != null && invalidStopword) throw new InvalidStopwordException("Stopword is not null and couldn't be found in the text");
+        if (count < 5) throw new TooSmallText("Count is less than 5. Count: " + count);
+        return count;
+    }
+
+    public static StringBuffer processFile(String filepath) throws EmptyFileException{
+        Scanner sc = null;
+        File file = null;
+
+        while (true) {
+            try {
+                file = new File(filepath);
+                sc = new Scanner(file);
+                break;
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found: " + filepath);
+                System.out.print("Enter another file path: ");
+                Scanner in = new Scanner(System.in);
+                filepath = in.nextLine();
+            }
+        }
+        StringBuffer buffer = new StringBuffer();
+        while (sc.hasNextLine()) {
+            buffer.append(sc.nextLine()).append("\n");
+        }
+        sc.close();
+
+        if (buffer.length() == 0) throw new EmptyFileException("File is empty: " + file.getPath());
+
+        return buffer;
     }
 
     public static void main(String[] args) {
@@ -42,31 +94,31 @@ public class WordCounter {
         boolean inputCheck = true;
         int option = 0;
 
-        while(inputCheck){
+        while(true){
             try(Scanner sc = new Scanner(System.in)){
-                System.out.println("Select option [1, 2]: ");   // check options, throw wrong option exception, while loop
-                option = scanner.nextInt();
-                scanner.close()
+                System.out.println("Select option [1, 2]: ");
+                option = sc.nextInt();
+                sc.close();
+                break;
             } catch (InputMismatchException e){
                 System.out.println("Wrong input");
                 continue;
             } catch (NoSuchElementException e){
                 System.out.println("input is exhausted");
                 continue;
-            } catch (NoSuchElementException e){
+            } catch (IllegalStateException e){
                 System.out.println("scanner is closed");
                 continue;
             }
-            inputCheck = false;
         }
+        
+        String firstArg = args[0];
         String stopword = null;
         if(args.length == 2) stopword = args[1];
         if(option == 1){
             // file
-            String filepath = args[0];
         } else {
             // text
-            String text = args[0];
         }
     }
 }
