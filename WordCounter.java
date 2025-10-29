@@ -62,13 +62,20 @@ public class WordCounter {
         return buffer;
     }
 
+
+/*
+1)  main prompts the user to re-enter an option until a correct choice is made	3
+2)  main asks the user to re-enter a stopword when a bad stopword is provided for a file	3
+3)  main prints out the correct number of words when the user chooses to process command line text that is long enough	3
+main prints a warning when the user chooses to process command line text that is too short	3
+*/
     public static void main(String[] args) {
 
         boolean inputCheck = true;
         int option = 0;
 
         Scanner sc = new Scanner(System.in);
-        while (true) {
+        while (true) {  // 1
             try {
                 System.out.println("Select option [1, 2]: ");
                 option = sc.nextInt();
@@ -93,10 +100,12 @@ public class WordCounter {
 
         try {
             int result = processText(buffer, stopword);
-            System.out.println("Found " + result + " words.");
+            System.out.println("Found " + result + " words.");  // 3
         } catch (InvalidStopwordException e) {
+            System.out.println("bad stopword, please retry with another word.");
             System.out.println(e.toString());
         } catch (TooSmallText e) {
+            if(option == 2) System.out.println("WARNING: command line text that is too short.");
             System.out.println(e.toString());
         }
     }

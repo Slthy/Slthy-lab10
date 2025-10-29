@@ -1,0 +1,41 @@
+commit fe463ca431fc1b14a3ff34b2ce625bc6e6a4bbe2
+Author: Alessandro Borsato <75090321+Slthy@users.noreply.github.com>
+Date:   Wed Oct 29 16:29:10 2025 -0400
+
+    final
+
+commit 3d2780f2a20d1ca448c7ac3139c9583400832456
+Author: Alessandro Borsato <75090321+Slthy@users.noreply.github.com>
+Date:   Mon Oct 27 17:18:13 2025 -0400
+
+    first OK version
+
+commit 14ad6fd675c4b0b681b13004218e98825aef8fdc
+Author: Alessandro Borsato <75090321+Slthy@users.noreply.github.com>
+Date:   Mon Oct 27 17:09:16 2025 -0400
+
+    refactor, 3 errors
+
+commit 4bc096b79fa16c35029cd58e8af009c59340900f
+Author: Alessandro Borsato <75090321+Slthy@users.noreply.github.com>
+Date:   Mon Oct 27 11:58:16 2025 -0400
+
+    buggy, compiles
+
+commit 0a804ae0da37e3d9af827f7605c872271ea654d5
+Author: Alessandro Borsato <75090321+Slthy@users.noreply.github.com>
+Date:   Mon Oct 27 11:26:53 2025 -0400
+
+    added junit, starting main
+
+commit 95672d7f4f24832411ab12090256a8b4ba32712c
+Author: Alessandro Borsato <75090321+Slthy@users.noreply.github.com>
+Date:   Mon Oct 27 10:29:52 2025 -0400
+
+    adding required .java files
+
+commit efacac3fb16c0f99a92457adf1cbe799083349f3
+Author: Alessandro Borsato <75090321+Slthy@users.noreply.github.com>
+Date:   Mon Oct 27 10:28:58 2025 -0400
+
+    initial commit
